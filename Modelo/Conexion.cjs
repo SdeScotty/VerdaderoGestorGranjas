@@ -1,4 +1,13 @@
 mysql = require("mysql");
+const knex = require('knex')({
+    client: 'mysql',
+    connection: {
+      host : 'localhost',
+      user : 'root',
+      password : '',
+      database : 'granjas'
+    }
+  });  
 class Conexion {
     static conexion = mysql.createConnection({
         host: "localhost",
@@ -19,18 +28,6 @@ class Conexion {
             });
         });
     }
-    static con() {
-        return new Promise((resolve, reject) => {
-            this.conexion.connect((error) => {
-                if (error) {
-                    throw error;
-                } else {
-                    console.log("Conexion hecha");
-                }
-            })
-        });
-    }
 }
 
 module.exports = Conexion;
-Conexion.con();
