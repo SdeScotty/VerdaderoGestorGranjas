@@ -100,13 +100,34 @@ class MaquinaDAO {
 
   }
 
-  getMaquinaPorGranja() {
+  static getPromiseMaquinasPorGranja(idGranja) {
+    return new Promise((resolve, reject) => {
+      Conexion.conexion.query("select * from maquina where idmaquina = ?", [idGranja],
+      (error, result) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(result);
+        }
+      });
+    });
+  }
 
+  static async getMaquinasPorGranja(idGranja) {
+    try {
+      await Conexion.conectar();
+      const maquinas = await this.getPromiseMaquinasPorGranja(idGranja);
+      console.log(maquinas);
+      Conexion.conexion.end();
+    } catch (error) {
+      console.log("Error: " . error);
+    }
   }
 }
 module.exports = MaquinaDAO;
 
-let maquinaEjemplo = new MaquinaVO(12, 1, "nuevo modelo", "numero de serie", "usuario", "wallet", "pool");
+//let maquinaEjemplo = new MaquinaVO(12, 1, "nuevo modelo", "numero de serie", "usuario", "wallet", "pool");
 //MaquinaDAO.nuevaMaquina(maquinaEjemplo);
-MaquinaDAO.modificarMaquina(maquinaEjemplo);
+//MaquinaDAO.modificarMaquina(maquinaEjemplo);
 //MaquinaDAO.borrarMaquina(13);
+MaquinaDAO.getMaquinasPorGranja(1);
