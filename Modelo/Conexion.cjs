@@ -1,5 +1,5 @@
 mysql = require("mysql");
-const knex = require('knex')({
+/*const knex = require('knex')({
     client: 'mysql',
     connection: {
       host : 'localhost',
@@ -7,7 +7,7 @@ const knex = require('knex')({
       password : '',
       database : 'granjas'
     }
-  });  
+  });*/
 class Conexion {
     static conexion = mysql.createConnection({
         host: "localhost",
