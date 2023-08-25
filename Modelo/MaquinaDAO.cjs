@@ -102,7 +102,7 @@ class MaquinaDAO {
 
   static getPromiseMaquinasPorGranja(idGranja) {
     return new Promise((resolve, reject) => {
-      Conexion.conexion.query("select * from maquina where idmaquina = ?", [idGranja],
+      Conexion.conexion.query("select * from maquina where idgranja = ?", [idGranja],
       (error, result) => {
         if (error) {
           reject(error);
@@ -117,8 +117,15 @@ class MaquinaDAO {
     try {
       await Conexion.conectar();
       const maquinas = await this.getPromiseMaquinasPorGranja(idGranja);
-      console.log(maquinas);
+      let maquinasVO = [];
+      for (let i = 0; i < maquinas.length; i++) {
+        let maquina = maquinas[i];
+        maquinasVO.push(new MaquinaVO(maquina.idmaquina, maquina.idgranja, maquina.modelo,
+          maquina.num_serie, maquina.nombre_usuario, maquina.wallet, maquina.pool));
+      }
+      //console.log(maquinasVO);
       Conexion.conexion.end();
+      return maquinasVO;
     } catch (error) {
       console.log("Error: " . error);
     }
@@ -130,4 +137,3 @@ module.exports = MaquinaDAO;
 //MaquinaDAO.nuevaMaquina(maquinaEjemplo);
 //MaquinaDAO.modificarMaquina(maquinaEjemplo);
 //MaquinaDAO.borrarMaquina(13);
-MaquinaDAO.getMaquinasPorGranja(1);

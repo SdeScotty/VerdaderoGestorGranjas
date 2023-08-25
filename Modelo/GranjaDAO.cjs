@@ -24,8 +24,9 @@ class GranjaDAO {
             await Conexion.conectar();
             const granja = await this.getPromiseGranjaPorNombre(nombre);
             let granjaVO = new GranjaVO(granja.idgranja, granja.localizacion, granja.propietario, granja.nombre);
-           // let maquinas = 
             Conexion.conexion.end();
+            let maquinas = MaquinaDAO.getMaquinasPorGranja(granjaVO.idgranja);
+            granjaVO.addMaquinas(maquinas);
             console.log('Granja:', granjaVO);
             return granjaVO;
 

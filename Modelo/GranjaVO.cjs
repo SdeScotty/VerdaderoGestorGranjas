@@ -6,9 +6,17 @@ class GranjaVO {
         this.nombre = nombre;
         this.maquinas = maquinas;
     }
-    
+
     addMaquina(maquina) {
         maquinas.push(maquina);
+    }
+
+    addMaquinas(maquinas) {
+        this.maquinas.concat(maquinas)
+    }
+    
+    setMaquinas(maquinas) {
+        this.maquinas = maquinas;
     }
 }
 
